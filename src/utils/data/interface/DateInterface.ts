@@ -1,5 +1,4 @@
-import { Cpu } from '@element-plus/icons-vue'
-import { defineComponent } from 'vue'
+import type { DefineComponent, ComponentOptionsMixin, VNodeProps, AllowedComponentProps, ComponentCustomProps, ExtractPropTypes } from 'vue'
 
 /**
  * 菜单命名空间
@@ -16,8 +15,9 @@ namespace Menu {
         // 唯一标识
         key: string
         // 图标
-        icon: typeof Cpu
-        component: typeof defineComponent
+        icon: DefineComponent<{}, {}, {}, {}, {}, ComponentOptionsMixin, ComponentOptionsMixin, {}, string, VNodeProps & AllowedComponentProps & ComponentCustomProps, Readonly<ExtractPropTypes<{}>>, {}, {}>
+        // 组件
+        component: any
     }
     /**
      * 菜单类型
@@ -26,7 +26,7 @@ namespace Menu {
         // 标签内容
         label: string
         // icon 图标
-        icon: typeof Cpu
+        icon: DefineComponent<{}, {}, {}, {}, {}, ComponentOptionsMixin, ComponentOptionsMixin, {}, string, VNodeProps & AllowedComponentProps & ComponentCustomProps, Readonly<ExtractPropTypes<{}>>, {}, {}>
         // 路由路径
         path: string
         // 定位锚点

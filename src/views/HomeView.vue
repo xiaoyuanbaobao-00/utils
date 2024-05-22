@@ -9,7 +9,7 @@
                     <span>收起</span>
                 </el-menu-item>
                 <el-menu-item v-for="(item, index) in MenuTables" :key="item.label" :index="String(2 + index)"
-                    @click="routerHref(item.path, item.anchor)">
+                    @click="routerHref(item.anchor)">
                     <el-icon>
                         <component :is="item.icon" />
                     </el-icon>
@@ -32,8 +32,8 @@
 import { ref, onMounted } from 'vue'
 import MenuTables from '@/utils/data/Menu'
 import { ArrowRight } from '@element-plus/icons-vue'
-import router from '@/router';
 import { usebreadcrumStore } from '@/store/index'
+import { scrollToAnchor } from "@/utils/ObjectUtils"
 
 // 菜单栏折叠
 let isCollapse = ref(false);
@@ -42,29 +42,19 @@ const breadcrumStore = usebreadcrumStore();
 
 onMounted(() => {
     if (location.hash) {
-        scrollToAnchor(location.hash.substring(1));
+        scrollTo(location.hash.substring(1));
     }
 })
 
 // 菜单栏点击
-function routerHref(path: string, anchor: string) {
+function routerHref(anchor: string) {
     breadcrumStore.breadcrumPathSplice('/');
-    router.push(path + '#' + anchor);
-    scrollToAnchor(anchor);
+    scrollTo(anchor);
 }
 
 // 滚动到锚点位置
-function scrollToAnchor(anchor: string) {
-    const mainNode = document.querySelector(".feature");
-    if (mainNode) {
-        let node = document.getElementById(anchor);
-        if (node) {
-            mainNode.scrollTo({
-                top: node.offsetTop - 55,
-                behavior: 'smooth'
-            });
-        }
-    }
+function scrollTo(anchor: string) {
+    scrollToAnchor(document.querySelector(".main-box") as HTMLElement, document.querySelector('#' + anchor) as HTMLElement, 75);
 }
 
 </script>
@@ -111,6 +101,7 @@ function scrollToAnchor(anchor: string) {
 .main-box {
     height: calc(100% - 60px);
     padding: 0 20px;
+    overflow: auto;
 }
 
 ::v-deep(.panel) {

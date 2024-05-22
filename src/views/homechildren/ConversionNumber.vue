@@ -52,8 +52,8 @@
                 </el-row>
                 <el-row>
                     <el-col :span="24">
-                        <el-input v-model="ConversionNumber.inputData" placeholder="在此输入待转换的数字"
-                            :value="ConversionNumber.conversion" size="large">
+                        <el-input v-model="ConversionNumber.inputData" placeholder="转换结果"
+                            :value="ConversionNumber.conversion" size="large" readonly>
                             <template #prepend>
                                 转换结果
                             </template>
@@ -65,11 +65,11 @@
     </div>
 </template>
 <script setup lang="ts">
-import Calulator from '@/utils/data/interface/DateInterface'
+import { Calculate } from '@/utils/data/interface/DateInterface'
 import { convertBases } from '@/utils/ObjectUtils'
 import { reactive, computed } from 'vue'
 
-const ConversionNumber: Calulator.ConversionNumber = reactive({
+const ConversionNumber: Calculate.ConversionNumber = reactive({
     fromBase: 2,
     inputData: '',
     toBase: 10,

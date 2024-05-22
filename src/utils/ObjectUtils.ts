@@ -426,6 +426,22 @@ function addMethod(obj: any, name: string, fn: Function)  {
 }
 
 /**
+ * 滚动到锚点位置
+ * @param{HTMLElement} rollElement 滚动元素
+ * @param{HTMLElement} anchorElement 锚点元素
+ * @param{number} error = 0 误差值
+ */
+function scrollToAnchor<T extends HTMLElement>(rollElement: T, anchorElement: T, error: number = 0) {
+    if(!objsIsNotNull(rollElement, anchorElement)) {
+        throw new Error("scrollToAnchor 元素参数不能为空");
+    }
+    rollElement.scrollTo({
+        top: anchorElement.offsetTop - error,
+        behavior: 'smooth'
+    })
+}
+
+/**
  * 用于拖拽移动的窗体逻辑
  */
 class MovePanel<T extends HTMLElement, R extends T> {
@@ -551,5 +567,7 @@ export {
     // 进制转换 2-60
     convertBases,
     // 函数重载
-    addMethod
+    addMethod,
+    // 滚动到锚点位置
+    scrollToAnchor
 }

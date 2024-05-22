@@ -124,7 +124,7 @@
 <script lang="ts" setup>
 import { ref, reactive, onMounted, computed } from 'vue';
 import { timeDifference, addTimesToDate, guessDateFormat, strIsNotNull, formatdata } from '@/utils/ObjectUtils';
-import Calculate from '@/utils/data/interface/DateInterface'
+import { Calculate } from '@/utils/data/interface/DateInterface'
 
 // 当前选中的目录索引
 const catalogueActive = ref(0);

@@ -4,7 +4,6 @@ import {
     Connection,
 } from '@element-plus/icons-vue'
 import { Menu } from '@/utils/data/interface/DateInterface';
-import { defineComponent } from 'vue'
 
 const calculate: Menu.MenuChildren[] = [
     {
@@ -12,14 +11,14 @@ const calculate: Menu.MenuChildren[] = [
         path:'/calculator/date',
         key: 'date',
         icon: Calendar,
-        component: () => defineComponent(import('@/views/homechildren/DateCalulator.vue'))
+        component: () => import('@/views/homechildren/DateCalulator.vue')
     },
     {
         label: '进制转换',
         path: '/calculator/conversion',
         key: 'conversion',
         icon: Connection,
-        component: () => defineComponent(import('@/views/homechildren/ConversionNumber.vue'))
+        component: () => import('@/views/homechildren/ConversionNumber.vue')
     }
 ];
 

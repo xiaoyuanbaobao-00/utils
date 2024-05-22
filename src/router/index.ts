@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import Home from "../views/homechildren/Home.vue";
 import MenuTables from '../utils/data/Menu'
@@ -32,7 +32,7 @@ MenuTables.forEach(item => {
 })
 
 const route = {
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes
 };
 

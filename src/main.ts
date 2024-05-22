@@ -35,12 +35,11 @@ app.whenReady().then(() => {
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) {
             createWindow();
-            ipceventmount(win);
         }
     })
     if (require('electron-squirrel-startup')) app.quit();
-    ipceventmount(win);
 }).then(() => {
+  ipceventmount(win);
   concrete = createTray(win);
 })
 
@@ -56,4 +55,3 @@ app.on('activate', () => {
     createWindow();
   }
 });
-
