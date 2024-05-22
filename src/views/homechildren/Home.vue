@@ -1,6 +1,6 @@
 <template>
     <div class="toolbar">
-        <div v-for="(item, index) in menuTables" :id="item.anchor" :key="index">
+        <div v-for="(item, index) in MenuTables" :id="item.anchor" :key="index">
             <h4 class="title">
                 <el-icon>
                     <component :is="item.icon"></component>
@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts" setup>
-import { menuTables } from '@/utils/data/menu'
+import MenuTables from '@/utils/data/Menu'
 import router from '@/router';
 import { usebreadcrumStore } from '@/store/index'
 

@@ -8,7 +8,7 @@
                     </el-icon>
                     <span>收起</span>
                 </el-menu-item>
-                <el-menu-item v-for="(item, index) in menuTables" :key="item.label" :index="String(2 + index)"
+                <el-menu-item v-for="(item, index) in MenuTables" :key="item.label" :index="String(2 + index)"
                     @click="routerHref(item.path, item.anchor)">
                     <el-icon>
                         <component :is="item.icon" />
@@ -30,7 +30,7 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
-import { menuTables } from '@/utils/data/menu'
+import MenuTables from '@/utils/data/Menu'
 import { ArrowRight } from '@element-plus/icons-vue'
 import router from '@/router';
 import { usebreadcrumStore } from '@/store/index'

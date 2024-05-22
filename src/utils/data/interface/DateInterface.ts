@@ -1,3 +1,41 @@
+import { Cpu } from '@element-plus/icons-vue'
+import { defineComponent } from 'vue'
+
+/**
+ * 菜单命名空间
+ */
+namespace Menu {
+    /**
+     * 菜单子类型
+     */
+    export interface MenuChildren {
+        // 标签内容
+        label: string
+        // 嵌套路由路径
+        path: string
+        // 唯一标识
+        key: string
+        // 图标
+        icon: typeof Cpu
+        component: typeof defineComponent
+    }
+    /**
+     * 菜单类型
+     */
+    export interface MenuTable {
+        // 标签内容
+        label: string
+        // icon 图标
+        icon: typeof Cpu
+        // 路由路径
+        path: string
+        // 定位锚点
+        anchor: string
+        // 子菜单
+        children: MenuChildren[]
+    }
+}
+
 /**
  * 计算工具命名空间
  */
@@ -83,4 +121,7 @@ namespace Calculate {
     }
 }
 
-export default Calculate;
+export {
+    Menu,
+    Calculate
+};
