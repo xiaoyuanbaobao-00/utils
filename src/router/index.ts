@@ -1,8 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
-import Home from "../views/homechildren/Home.vue";
-import MenuTables from '../utils/data/Menu'
-import { defineAsyncComponent } from 'vue';
+import HomeView from "@/views/HomeView.vue";
+import Home from "@/views/homechildren/Home.vue";
+import MenuTables from '@/utils/data/Menu'
 
 const routes = [
     {
@@ -26,7 +25,7 @@ MenuTables.forEach(item => {
         routes[0].children.push({
             name: item.anchor + children.key,
             path: children.path,
-            component: defineAsyncComponent(children.component)
+            component: children.component
         })
     })
 })

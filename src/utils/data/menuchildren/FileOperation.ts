@@ -3,7 +3,6 @@ import {
     PictureRounded
 } from '@element-plus/icons-vue'
 import { Menu } from '@/utils/data/interface/DateInterface';
-import { defineComponent } from 'vue'
 
 const fileOperation: Menu.MenuChildren[] = [
     {
@@ -11,7 +10,7 @@ const fileOperation: Menu.MenuChildren[] = [
         path: '/file/conversion',
         key: 'operation',
         icon: PictureRounded,
-        component: () => defineComponent(import('@/views/filechildren/ImageConversion.vue'))
+        component: () => import('@/views/filechildren/ImageConversion.vue')
     }
 ]
 

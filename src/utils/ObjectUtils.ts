@@ -201,7 +201,7 @@ function timeDifference<T extends number | Date | string>(timer: T, timer2: T) {
  * @param days 
  * @returns 
  */
-function addDaysToDate<T extends number | Date | string, R extends number>(timer: T, days: R) {
+function addDaysToDate<T extends number | Date | string, R extends number>(timer: T, days: R): Date {
     // 创建一个新的Date对象，以避免修改原始日期对象
     let newDate = new Date(timer);
     // 在现有的日期上加上指定的天数
@@ -215,7 +215,7 @@ function addDaysToDate<T extends number | Date | string, R extends number>(timer
  * @param days 
  * @returns 
  */
-function addHoursToDate<T extends number | Date | string, R extends number>(timer: T, days: R) {
+function addHoursToDate<T extends number | Date | string, R extends number>(timer: T, days: R): Date {
     // 创建一个新的Date对象，以避免修改原始日期对象
     let newDate = new Date(timer);
     // 在现有的日期上加上指定的天数
@@ -229,7 +229,7 @@ function addHoursToDate<T extends number | Date | string, R extends number>(time
  * @param days 
  * @returns 
  */
-function addMinutesToDate<T extends number | Date | string, R extends number>(timer: T, days: R) {
+function addMinutesToDate<T extends number | Date | string, R extends number>(timer: T, days: R): Date {
     // 创建一个新的Date对象，以避免修改原始日期对象
     let newDate = new Date(timer);
     // 在现有的日期上加上指定的天数
@@ -243,7 +243,7 @@ function addMinutesToDate<T extends number | Date | string, R extends number>(ti
  * @param days 
  * @returns 
  */
-function addsecondsToDate<T extends number | Date | string, R extends number>(timer: T, days: R) {
+function addsecondsToDate<T extends number | Date | string, R extends number>(timer: T, days: R): Date {
     // 创建一个新的Date对象，以避免修改原始日期对象
     let newDate = new Date(timer);
     // 在现有的日期上加上指定的天数
@@ -256,7 +256,7 @@ function addsecondsToDate<T extends number | Date | string, R extends number>(ti
  * @param dateStr 
  * @returns 
  */
-function guessDateFormat(dateStr: string) {
+function guessDateFormat(dateStr: string): string {
     const formats = [
         { regex: /^\d{4}$/, format: 'yyyy' },
         { regex: /^\d{4}.\d{2}.\d{2}$/, format: 'yyyy-MM-dd' },
@@ -285,7 +285,7 @@ function guessDateFormat(dateStr: string) {
  * @param seconds 秒
  * @returns 
  */
-function addTimesToDate<T extends number | Date | string, U extends number>(timer: T, days: U, hours: U, minutes: U, seconds: U) {
+function addTimesToDate<T extends number | Date | string, U extends number>(timer: T, days: U, hours: U, minutes: U, seconds: U): Date {
     // 创建一个新的Date对象，以避免修改原始日期对象
     let newDate = new Date(timer);
     // 在现有的日期上加上指定的天数、小时、分钟和秒数
@@ -307,7 +307,7 @@ function formatdata<T extends string | number | Date>(date: T, format: string): 
 
     const d = new Date(date);
 
-    const replacements: {[key: string]: string} = {
+    const replacements: { [key: string]: string } = {
         'yyyy': String(d.getFullYear()),
         'MM': pad(d.getMonth() + 1),
         'dd': pad(d.getDate()),
@@ -371,8 +371,8 @@ function deepClone<T>(value: T): T {
  * @param toBase 转换进制
  * @returns 
  */
-function convertBases(fromBase: number, inputData: string, toBase:number) {
-    if(!strIsNotNull(inputData)) return '';
+function convertBases(fromBase: number, inputData: string, toBase: number): string {
+    if (!strIsNotNull(inputData)) return '';
 
     if (fromBase < 2 || fromBase > 60 || toBase < 2 || toBase > 60) {
         throw new Error("只支持 2 到 60 进制的转换")
@@ -380,7 +380,7 @@ function convertBases(fromBase: number, inputData: string, toBase:number) {
 
     // 定义所有可能的字符
     const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-    
+
     if (fromBase > 36 || toBase > 36) {
         // 扩展字符集合，此处简单地扩展至60字符，实际可以使用更多特殊字符或双字符表示
         let extra = 10 + 26 + 26; // 已有的是数字+小写字母+大写字母
@@ -414,10 +414,10 @@ function convertBases(fromBase: number, inputData: string, toBase:number) {
  * @param name 函数名
  * @param fn 不同参数数量的函数
  */
-function addMethod(obj: any, name: string, fn: Function)  {
+function addMethod(obj: any, name: string, fn: Function) {
     const old = obj[name];
-    obj[name] = function(...args: Array<any>) {
-        if(args.length === fn.length) {
+    obj[name] = function (...args: Array<any>) {
+        if (args.length === fn.length) {
             return fn.apply(this, args);
         } else if (typeof old === 'function') {
             return old.apply(this, args);
@@ -429,16 +429,82 @@ function addMethod(obj: any, name: string, fn: Function)  {
  * 滚动到锚点位置
  * @param{HTMLElement} rollElement 滚动元素
  * @param{HTMLElement} anchorElement 锚点元素
- * @param{number} error = 0 误差值
+ * @param{number} error 误差值 默认为 0 (px)
  */
-function scrollToAnchor<T extends HTMLElement>(rollElement: T, anchorElement: T, error: number = 0) {
-    if(!objsIsNotNull(rollElement, anchorElement)) {
+function scrollToAnchor<T extends HTMLElement>(rollElement: T, anchorElement: T, error: number = 0): void {
+    if (!objsIsNotNull(rollElement, anchorElement)) {
         throw new Error("scrollToAnchor 元素参数不能为空");
     }
     rollElement.scrollTo({
         top: anchorElement.offsetTop - error,
         behavior: 'smooth'
     })
+}
+
+/**
+ * 深度冻结，严格，冻结对象不可变
+ * @param obj 对象
+ * @returns 返回一个被冻结的代理对象
+ */
+function deepFreezeProxy<T extends object>(obj: T, warn: boolean = true): T {
+    if(Object.isFrozen(obj) && warn) {
+        console.warn('deepFreezeProxy warn: 该对象已被冻结，虽然可以再次代理冻结，但是并不推荐，如果需要修改抛出异常，或冻结不全，则可无视该警告。设置参数 warn 为 false 可关闭该警告')
+    }
+
+    // 用于检测循环引用的Set
+    const visited = new Set<object>();
+    function deepFreezeIn<T extends object>(obj: T): T {
+        // 检查是否已经访问过该对象，以处理循环引用
+        if (visited.has(obj)) {
+            return obj;
+        }
+
+        // 将对象标记为已访问
+        visited.add(obj);
+        return new Proxy(obj, {
+            get(target, prop, receiver) {
+                const value = Reflect.get(target, prop, receiver);
+                if (value && typeof value === 'object') {
+                    // 递归冻结
+                    return freeze(deepFreezeIn(value));
+                }
+                return value;
+            },
+            set(_target, prop, _value) {
+                throw new Error(`不能修改属性 ${String(prop)}，对象是不可变的。考虑在调用 deepFreezeProxy 之前进行修改。`);
+            }
+        })
+    }
+
+    const frozenObj = freeze(deepFreezeIn(obj));
+    // 清空visited Set，以便于下次调用时不保留之前的状态
+    visited.clear();
+
+    return frozenObj;
+}
+
+/**
+ * 浅层冻结对象，不可修改
+ * @param obj 对象
+ * @returns 
+ */
+function freeze<T extends object>(obj: T): T {
+    return Object.freeze(obj);
+}
+
+/**
+ * 深度冻结对象，不可修改
+ * @param obj 
+ * @returns 对象
+ */
+function deepFreeze<T extends object>(obj: T): T {
+    Object.keys(obj).forEach(key => {
+        const value = obj[key as keyof T];
+        if (value && typeof value === 'object' && !Array.isArray(value) && !Object.isFrozen(value)) {
+            deepFreeze(value);
+        }
+    });
+    return Object.freeze(obj);
 }
 
 /**
@@ -468,7 +534,7 @@ class MovePanel<T extends HTMLElement, R extends T> {
         this.mouseUp = this.mouseUp.bind(this);
     }
 
-    setElement(pointer: T, frame: R, callback: Function | undefined) {
+    setElement(pointer: T, frame: R, callback: Function | undefined): void {
         this.pointer = pointer;
         this.frame = frame;
         this.callback = callback;
@@ -478,7 +544,7 @@ class MovePanel<T extends HTMLElement, R extends T> {
      * 当指针被鼠标点击时，绑定相关的事件
      * @param event 
      */
-    pointerDown(event: MouseEvent) {
+    pointerDown(event: MouseEvent): void {
         // 确定其与指针标记的是同一个元素
         if (HTMLElementIsSameNode(event.target, this.pointer)) {
             if (this.frame === undefined || this.frame === null) {
@@ -499,7 +565,7 @@ class MovePanel<T extends HTMLElement, R extends T> {
         }
     }
     // 监听鼠标移动
-    mouseMove(event: MouseEvent) {
+    mouseMove(event: MouseEvent): void {
         // 计算出移动的距离
         this.posX = event.clientX - this.posInitX;
         this.posY = event.clientY - this.posInitY;
@@ -510,7 +576,7 @@ class MovePanel<T extends HTMLElement, R extends T> {
         this.frame!.style.top = (this.modelY + this.posY) + 'px';
     }
     // 当鼠标松开时触发
-    mouseUp() {
+    mouseUp(): void {
         document.removeEventListener('mousemove', this.mouseMove);
         document.removeEventListener('mouseup', this.mouseUp);
         if (isFunction(this.callback)) {
@@ -569,5 +635,11 @@ export {
     // 函数重载
     addMethod,
     // 滚动到锚点位置
-    scrollToAnchor
+    scrollToAnchor,
+    // 浅层冻结对象
+    freeze,
+    // 深层冻结对象
+    deepFreeze,
+    // 深层冻结对象，严格
+    deepFreezeProxy
 }

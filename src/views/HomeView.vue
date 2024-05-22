@@ -9,7 +9,7 @@
                     <span>收起</span>
                 </el-menu-item>
                 <el-menu-item v-for="(item, index) in MenuTables" :key="item.label" :index="String(2 + index)"
-                    @click="routerHref(item.anchor)">
+                    @click="routerHref(item.path, item.anchor)">
                     <el-icon>
                         <component :is="item.icon" />
                     </el-icon>
@@ -29,27 +29,24 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import MenuTables from '@/utils/data/Menu'
 import { ArrowRight } from '@element-plus/icons-vue'
 import { usebreadcrumStore } from '@/store/index'
 import { scrollToAnchor } from "@/utils/ObjectUtils"
+import router from '@/router'
 
 // 菜单栏折叠
-let isCollapse = ref(false);
+let isCollapse = ref<boolean>(false);
 
 const breadcrumStore = usebreadcrumStore();
 
-onMounted(() => {
-    if (location.hash) {
-        scrollTo(location.hash.substring(1));
-    }
-})
-
 // 菜单栏点击
-function routerHref(anchor: string) {
+function routerHref(path: string, anchor: string) {
     breadcrumStore.breadcrumPathSplice('/');
-    scrollTo(anchor);
+    router.push(path + '#' + anchor).then(() => {
+        scrollTo(anchor);
+    });
 }
 
 // 滚动到锚点位置
